@@ -23,10 +23,9 @@ export default function JoinPoll() {
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-brand-bg">
 
-      {/* Demo banner */}
       {isDemoMode && (
         <div
-          className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-1.5 bg-brand-card border border-brand-border rounded-full text-xs font-semibold tracking-wider text-brand-cyan uppercase"
+          className="absolute top-4 left-1/2 -translate-x-1/2 demo-banner-animate flex items-center gap-2 px-4 py-1.5 bg-brand-card border border-brand-border rounded-full text-xs font-semibold tracking-wider text-brand-cyan uppercase"
           role="status"
           aria-live="polite"
         >
@@ -36,7 +35,7 @@ export default function JoinPoll() {
       )}
 
       {/* Card */}
-      <div className="relative w-full max-w-md glass-card rounded-2xl overflow-hidden shadow-xl">
+      <div className="join-card-animate relative w-full max-w-md glass-card rounded-2xl overflow-hidden shadow-xl">
 
         {/* Top accent line */}
         <div className="h-1 w-full bg-gradient-to-r from-brand-cyan via-brand-accent to-brand-gold" aria-hidden="true"></div>
@@ -77,7 +76,7 @@ export default function JoinPoll() {
               placeholder="Ej: JuanGol, SuperClasificado..."
               maxLength={20}
               autoComplete="nickname"
-              className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-border-active rounded-lg text-brand-text font-medium placeholder-brand-text-muted focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 transition-colors"
+              className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-border-active rounded-lg text-brand-text font-medium placeholder-brand-text-muted focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 transition-[border-color,box-shadow] duration-150"
             />
             <span className="block text-xs text-brand-text-muted text-right" aria-live="polite">
               {username.length}/20 caracteres
@@ -97,7 +96,7 @@ export default function JoinPoll() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-brand-cyan hover:bg-brand-border-active disabled:opacity-50 text-slate-900 font-extrabold text-sm tracking-wider uppercase rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:ring-offset-2 focus:ring-offset-brand-card"
+            className="btn-interactive w-full flex items-center justify-center gap-2 py-3 px-4 bg-brand-cyan hover:bg-brand-border-active disabled:opacity-50 text-slate-900 font-extrabold text-sm tracking-wider uppercase rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:ring-offset-2 focus:ring-offset-brand-card"
           >
             {loading ? "Verificando..." : "Entrar al Estadio"}
             <ArrowRight size={15} aria-hidden="true" />

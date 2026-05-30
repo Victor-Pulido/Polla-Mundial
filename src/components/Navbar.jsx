@@ -21,7 +21,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-panel px-4 md:px-8 py-3 flex flex-col md:flex-row gap-3 items-center justify-between">
+    <header className="navbar-animate sticky top-0 z-50 w-full glass-panel px-4 md:px-8 py-3 flex flex-col md:flex-row gap-3 items-center justify-between">
 
       {/* Logo */}
       <div className="flex items-center gap-3">
@@ -68,7 +68,7 @@ export default function Navbar() {
         <button
           onClick={handleShare}
           aria-label={copied ? "Enlace copiado al portapapeles" : "Compartir enlace de la polla"}
-          className="flex items-center gap-2 py-2 px-4 bg-brand-card border border-brand-border hover:border-brand-border-active rounded-lg text-sm font-semibold text-brand-text-secondary hover:text-brand-text transition-colors cursor-pointer"
+          className="btn-interactive flex items-center gap-2 py-2 px-4 bg-brand-card border border-brand-border hover:border-brand-border-active rounded-lg text-sm font-semibold text-brand-text-secondary hover:text-brand-text cursor-pointer"
         >
           {copied ? (
             <>
@@ -87,7 +87,7 @@ export default function Navbar() {
           <button
             onClick={handleLogout}
             aria-label="Cerrar sesión"
-            className="flex items-center justify-center p-2 min-w-[44px] min-h-[44px] bg-brand-crimson/10 border border-brand-crimson/25 hover:bg-brand-crimson/20 hover:border-brand-crimson/50 rounded-lg text-brand-crimson transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-crimson/50"
+            className="btn-interactive flex items-center justify-center p-2 min-w-[44px] min-h-[44px] bg-brand-crimson/10 border border-brand-crimson/25 hover:bg-brand-crimson/20 hover:border-brand-crimson/50 rounded-lg text-brand-crimson cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-crimson/50"
           >
             <LogOut size={15} aria-hidden="true" />
           </button>

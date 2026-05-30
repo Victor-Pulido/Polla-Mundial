@@ -31,7 +31,7 @@ export const TEAMS = [
   { id: "crc", name: "Costa Rica", countryCode: "CR", groupLetter: "E", flag: "🇨🇷" },
 
   // Grupo F
-  { id: "eng", name: "Inglaterra", countryCode: "GB", groupLetter: "F", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+  { id: "eng", name: "Inglaterra", countryCode: "GB-ENG", groupLetter: "F", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
   { id: "ita", name: "Italia", countryCode: "IT", groupLetter: "F", flag: "🇮🇹" },
   { id: "cro", name: "Croacia", countryCode: "HR", groupLetter: "F", flag: "🇭🇷" },
   { id: "sui", name: "Suiza", countryCode: "CH", groupLetter: "F", flag: "🇨🇭" },

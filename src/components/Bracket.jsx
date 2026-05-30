@@ -1,6 +1,7 @@
 import React from "react";
 import { useStore } from "../store/useStore";
 import { Trophy } from "lucide-react";
+import FlagImage from "./FlagImage";
 
 export default function Bracket() {
   const { matches, teams, predictions } = useStore();
@@ -56,11 +57,14 @@ export default function Bracket() {
         </div>
 
         {/* Teams */}
-        <div className="bg-brand-card border border-brand-border hover:border-brand-border-active p-2.5 rounded-b-lg flex flex-col gap-1.5 transition-colors">
+        <div className="bg-brand-card border border-brand-border hover:border-brand-border-active p-2.5 rounded-b-lg flex flex-col gap-1.5 transition-[border-color] duration-150">
 
           <div className="flex items-center justify-between text-sm font-semibold">
             <div className="flex items-center gap-1.5 min-w-0">
-              <span className="text-base select-none" role="img" aria-label={teamA?.name || "Equipo A"}>{teamA?.flag || "🏳️"}</span>
+              {teamA
+                ? <FlagImage code={teamA.countryCode} name={teamA.name} size={18} />
+                : <div className="w-5 h-3.5 rounded bg-brand-card-hover border border-brand-border" aria-hidden="true" />
+              }
               <span className={`truncate ${teamA ? "text-brand-text font-extrabold" : "text-brand-text-muted"}`}>
                 {teamA?.name || match.teamAPlaceholder}
               </span>
@@ -74,7 +78,10 @@ export default function Bracket() {
 
           <div className="flex items-center justify-between text-sm font-semibold">
             <div className="flex items-center gap-1.5 min-w-0">
-              <span className="text-base select-none" role="img" aria-label={teamB?.name || "Equipo B"}>{teamB?.flag || "🏳️"}</span>
+              {teamB
+                ? <FlagImage code={teamB.countryCode} name={teamB.name} size={18} />
+                : <div className="w-5 h-3.5 rounded bg-brand-card-hover border border-brand-border" aria-hidden="true" />
+              }
               <span className={`truncate ${teamB ? "text-brand-text font-extrabold" : "text-brand-text-muted"}`}>
                 {teamB?.name || match.teamBPlaceholder}
               </span>
@@ -145,9 +152,11 @@ export default function Bracket() {
                                 : <span className="text-brand-text-muted">{index + 1}°</span>
                               }
                             </td>
-                            <td className="py-2 flex items-center gap-1.5 truncate max-w-[120px]">
-                              <span className="text-base select-none" role="img" aria-label={team.name}>{team.flag}</span>
-                              <span className={`truncate text-brand-text text-sm ${qualifies ? "font-extrabold" : ""}`}>{team.name}</span>
+                            <td className="py-2">
+                              <div className="flex items-center gap-1.5 truncate max-w-[120px]">
+                                <FlagImage code={team.countryCode} name={team.name} size={18} />
+                                <span className={`truncate text-brand-text text-sm ${qualifies ? "font-extrabold" : ""}`}>{team.name}</span>
+                              </div>
                             </td>
                             <td className="py-2 text-center font-outfit font-black text-brand-text text-sm">
                               {team.pts}

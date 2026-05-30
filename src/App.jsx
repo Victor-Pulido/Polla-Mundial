@@ -30,7 +30,7 @@ function PollWrapper() {
     return (
       <div className="min-h-screen bg-brand-bg flex items-center justify-center">
         <div className="flex flex-col items-center gap-3" role="status" aria-label="Restaurando sesión">
-          <div className="w-10 h-10 rounded-full border-4 border-brand-cyan border-t-transparent animate-spin" aria-hidden="true"></div>
+          <div className="w-10 h-10 rounded-full border-3 border-brand-border border-t-brand-cyan spinner-fast" aria-hidden="true"></div>
           <span className="text-xs font-mono text-brand-text-muted uppercase tracking-widest">Restaurando sesión...</span>
         </div>
       </div>

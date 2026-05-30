@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useStore } from "../store/useStore";
 import { Award, Trophy, Eye, CheckCircle2, XCircle, Search, HelpCircle, X } from "lucide-react";
+import FlagImage from "./FlagImage";
 
 export default function Leaderboard() {
   const { standings, allPredictions, matches, teams } = useStore();
@@ -46,7 +47,7 @@ export default function Leaderboard() {
                 role="listitem"
                 onClick={() => handleInspectUser(standings[1].user_id, standings[1].username)}
                 aria-label={`Ver predicciones de ${standings[1].username}, 2do lugar con ${standings[1].correct_predictions} puntos`}
-                className="glass-card mt-6 p-4 rounded-xl text-center hover:border-brand-silver/50 cursor-pointer flex flex-col justify-end items-center relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-silver/50 w-full"
+                className="podium-second btn-interactive glass-card mt-6 p-4 rounded-xl text-center hover:border-brand-silver/50 cursor-pointer flex flex-col justify-end items-center relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-silver/50 w-full"
               >
                 <div className="absolute top-0 right-0 p-1.5 bg-brand-silver/10 text-brand-silver font-black text-xs font-outfit rounded-bl-lg" aria-hidden="true">2°</div>
                 <div className="p-2.5 bg-brand-silver/10 border border-brand-silver/20 rounded-full text-brand-silver mb-2" aria-hidden="true">
@@ -64,7 +65,7 @@ export default function Leaderboard() {
                 role="listitem"
                 onClick={() => handleInspectUser(standings[0].user_id, standings[0].username)}
                 aria-label={`Ver predicciones de ${standings[0].username}, 1er lugar con ${standings[0].correct_predictions} puntos`}
-                className="glass-card p-5 rounded-xl border-brand-gold/30 text-center hover:border-brand-gold/60 cursor-pointer flex flex-col justify-end items-center relative overflow-hidden scale-105 z-10 bg-brand-gold/5 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 w-full"
+                className="podium-first btn-interactive glass-card p-5 rounded-xl border-brand-gold/30 text-center hover:border-brand-gold/60 cursor-pointer flex flex-col justify-end items-center relative overflow-hidden scale-105 z-10 bg-brand-gold/5 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 w-full"
               >
                 <div className="absolute top-0 right-0 p-1.5 bg-brand-gold/15 text-brand-gold font-black text-sm font-outfit rounded-bl-lg" aria-hidden="true">1°</div>
                 <div className="p-3.5 bg-brand-gold/10 border border-brand-gold/25 rounded-full text-brand-gold mb-3" aria-hidden="true">
@@ -82,7 +83,7 @@ export default function Leaderboard() {
                 role="listitem"
                 onClick={() => handleInspectUser(standings[2].user_id, standings[2].username)}
                 aria-label={`Ver predicciones de ${standings[2].username}, 3er lugar con ${standings[2].correct_predictions} puntos`}
-                className="glass-card mt-8 p-4 rounded-xl border-brand-bronze/20 text-center hover:border-brand-bronze/50 cursor-pointer flex flex-col justify-end items-center relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-bronze/50 w-full"
+                className="podium-third btn-interactive glass-card mt-8 p-4 rounded-xl border-brand-bronze/20 text-center hover:border-brand-bronze/50 cursor-pointer flex flex-col justify-end items-center relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-bronze/50 w-full"
               >
                 <div className="absolute top-0 right-0 p-1.5 bg-brand-bronze/10 text-brand-bronze font-black text-xs font-outfit rounded-bl-lg" aria-hidden="true">3°</div>
                 <div className="p-2.5 bg-brand-bronze/10 border border-brand-bronze/20 rounded-full text-brand-bronze mb-2" aria-hidden="true">
@@ -128,7 +129,7 @@ export default function Leaderboard() {
                   if (index === 2) medalColor = "text-brand-bronze";
 
                   return (
-                    <tr key={user.id} className="hover:bg-brand-card-hover transition-colors">
+                    <tr key={user.id} className="standing-row hover:bg-brand-card-hover transition-colors">
                       <td className="px-6 py-4 text-center font-outfit font-black text-sm text-brand-text-secondary">
                         {index < 3 ? (
                           <Trophy size={16} className={medalColor} aria-label={`${index + 1}er lugar`} />
@@ -154,7 +155,7 @@ export default function Leaderboard() {
                         <button
                           onClick={() => handleInspectUser(user.user_id, user.username)}
                           aria-label={`Ver predicciones de ${user.username}`}
-                          className="flex items-center justify-center min-w-[44px] min-h-[44px] mx-auto bg-brand-cyan/10 hover:bg-brand-cyan text-brand-cyan hover:text-slate-900 border border-brand-cyan/30 hover:border-brand-cyan rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan/30"
+                          className="btn-interactive flex items-center justify-center min-w-[44px] min-h-[44px] mx-auto bg-brand-cyan/10 hover:bg-brand-cyan text-brand-cyan hover:text-slate-900 border border-brand-cyan/30 hover:border-brand-cyan rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan/30"
                         >
                           <Eye size={14} aria-hidden="true" />
                         </button>
@@ -179,7 +180,10 @@ export default function Leaderboard() {
       {/* === Predictions sidebar === */}
       <aside className="lg:col-span-1" aria-label="Predicciones del jugador seleccionado">
         {selectedUser ? (
-          <div className="glass-card rounded-xl overflow-hidden shadow-lg sticky top-24 max-h-[80vh] flex flex-col">
+          <div
+            key={selectedUser.username}
+            className="sidebar-animate glass-card rounded-xl overflow-hidden shadow-lg sticky top-24 max-h-[80vh] flex flex-col"
+          >
 
             <div className="px-5 py-4 bg-brand-card-hover border-b border-brand-border flex items-center justify-between">
               <div>
@@ -193,7 +197,7 @@ export default function Leaderboard() {
               <button
                 onClick={() => setSelectedUser(null)}
                 aria-label={`Cerrar panel de predicciones de ${selectedUser.username}`}
-                className="flex items-center justify-center min-w-[44px] min-h-[44px] bg-brand-card-hover hover:bg-brand-border rounded-lg text-brand-text-secondary hover:text-brand-text cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-border"
+                className="btn-interactive flex items-center justify-center min-w-[44px] min-h-[44px] bg-brand-card-hover hover:bg-brand-border rounded-lg text-brand-text-secondary hover:text-brand-text cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-border"
               >
                 <X size={15} aria-hidden="true" />
               </button>
@@ -229,7 +233,10 @@ export default function Leaderboard() {
 
                     <div className="flex items-center justify-between text-sm font-semibold text-brand-text">
                       <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                        <span className="text-lg select-none" role="img" aria-label={pred.teamA?.name || "Equipo A"}>{pred.teamA?.flag || "🏳️"}</span>
+                        {pred.teamA
+                          ? <FlagImage code={pred.teamA.countryCode} name={pred.teamA.name} size={20} />
+                          : <span className="text-brand-text-muted text-xs" aria-hidden="true">?</span>
+                        }
                         <span className="truncate">{pred.teamA?.name || pred.match.teamAPlaceholder}</span>
                       </div>
 
@@ -246,7 +253,10 @@ export default function Leaderboard() {
 
                       <div className="flex items-center gap-1.5 flex-1 min-w-0 justify-end text-right">
                         <span className="truncate">{pred.teamB?.name || pred.match.teamBPlaceholder}</span>
-                        <span className="text-lg select-none" role="img" aria-label={pred.teamB?.name || "Equipo B"}>{pred.teamB?.flag || "🏳️"}</span>
+                        {pred.teamB
+                          ? <FlagImage code={pred.teamB.countryCode} name={pred.teamB.name} size={20} />
+                          : <span className="text-brand-text-muted text-xs" aria-hidden="true">?</span>
+                        }
                       </div>
                     </div>
                   </div>

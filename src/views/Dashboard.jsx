@@ -8,11 +8,11 @@ import Bracket from "../components/Bracket";
 import { Trophy, Calendar, ClipboardCheck, LayoutGrid, BarChart3, Search, TrendingUp, HelpCircle, CheckCircle2 } from "lucide-react";
 
 const TABS = [
-  { id: "ranking",  label: "Ranking",     icon: <Trophy size={15} aria-hidden="true" />,         emoji: "📊" },
-  { id: "predict",  label: "Pronosticar", icon: <Calendar size={15} aria-hidden="true" />,        emoji: "🎯" },
-  { id: "results",  label: "Resultados",  icon: <ClipboardCheck size={15} aria-hidden="true" />,  emoji: "✅" },
-  { id: "bracket",  label: "Bracket",     icon: <LayoutGrid size={15} aria-hidden="true" />,      emoji: "🏆" },
-  { id: "stats",    label: "Mis Stats",   icon: <BarChart3 size={15} aria-hidden="true" />,       emoji: "👤" },
+  { id: "ranking",  label: "Ranking",     icon: <Trophy size={15} aria-hidden="true" /> },
+  { id: "predict",  label: "Pronosticar", icon: <Calendar size={15} aria-hidden="true" /> },
+  { id: "results",  label: "Resultados",  icon: <ClipboardCheck size={15} aria-hidden="true" /> },
+  { id: "bracket",  label: "Bracket",     icon: <LayoutGrid size={15} aria-hidden="true" /> },
+  { id: "stats",    label: "Mis Stats",   icon: <BarChart3 size={15} aria-hidden="true" /> },
 ];
 
 export default function Dashboard() {
@@ -67,7 +67,7 @@ export default function Dashboard() {
             aria-label="Actualizando datos"
           >
             <div className="glass-card p-6 rounded-xl flex flex-col items-center gap-3">
-              <div className="w-10 h-10 rounded-full border-4 border-t-brand-cyan border-brand-border animate-spin" aria-hidden="true"></div>
+              <div className="w-10 h-10 rounded-full border-3 border-brand-border border-t-brand-cyan spinner-fast" aria-hidden="true"></div>
               <span className="font-inter text-sm font-bold text-brand-text tracking-widest uppercase">
                 Actualizando Estadio...
               </span>
@@ -91,14 +91,13 @@ export default function Dashboard() {
                 aria-controls={`panel-${tab.id}`}
                 id={`tab-${tab.id}`}
                 onClick={() => handleTabChange(tab.id)}
-                className={`flex items-center gap-2 py-2 px-4 rounded-lg text-xs font-bold tracking-wide uppercase transition-all cursor-pointer whitespace-nowrap ${
+                className={`flex items-center gap-2 py-2 px-4 rounded-lg text-xs font-bold tracking-wide uppercase btn-interactive cursor-pointer whitespace-nowrap ${
                   isActive
                     ? "bg-brand-cyan text-slate-900 shadow-sm"
                     : "text-brand-text-secondary hover:text-brand-text hover:bg-brand-card-hover"
                 }`}
               >
                 {tab.icon}
-                <span aria-hidden="true">{tab.emoji}</span>
                 <span>{tab.label}</span>
               </button>
             );
@@ -111,7 +110,7 @@ export default function Dashboard() {
           id="panel-ranking"
           aria-labelledby="tab-ranking"
           hidden={activeTab !== "ranking"}
-          className="animate-in fade-in slide-in-from-bottom-2 duration-200"
+          className=""
         >
           {activeTab === "ranking" && <Leaderboard />}
         </div>
@@ -122,7 +121,7 @@ export default function Dashboard() {
           id="panel-predict"
           aria-labelledby="tab-predict"
           hidden={activeTab !== "predict"}
-          className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-200"
+          className="space-y-6"
         >
           {activeTab === "predict" && (
             <>
@@ -173,7 +172,7 @@ export default function Dashboard() {
           id="panel-results"
           aria-labelledby="tab-results"
           hidden={activeTab !== "results"}
-          className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-200"
+          className="space-y-6"
         >
           {activeTab === "results" && (
             <>
@@ -223,7 +222,7 @@ export default function Dashboard() {
           id="panel-bracket"
           aria-labelledby="tab-bracket"
           hidden={activeTab !== "bracket"}
-          className="animate-in fade-in slide-in-from-bottom-2 duration-200"
+          className=""
         >
           {activeTab === "bracket" && <Bracket />}
         </div>
@@ -234,7 +233,7 @@ export default function Dashboard() {
           id="panel-stats"
           aria-labelledby="tab-stats"
           hidden={activeTab !== "stats"}
-          className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-200"
+          className="space-y-6"
         >
           {activeTab === "stats" && (
             <>
@@ -249,7 +248,7 @@ export default function Dashboard() {
 
               {/* Stats grid */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="glass-card p-5 rounded-xl border-brand-gold/30 flex items-center justify-between">
+                <div className="stats-card glass-card p-5 rounded-xl border-brand-gold/30 flex items-center justify-between">
                   <div>
                     <span className="text-xs font-bold text-brand-gold uppercase tracking-wide">Posición</span>
                     <div className="font-outfit text-3xl font-black text-brand-text mt-1">#{myRank || "—"}</div>
@@ -257,7 +256,7 @@ export default function Dashboard() {
                   <Trophy size={36} className="text-brand-gold/30 shrink-0" aria-hidden="true" />
                 </div>
 
-                <div className="glass-card p-5 rounded-xl border-brand-accent/30 flex items-center justify-between">
+                <div className="stats-card glass-card p-5 rounded-xl border-brand-accent/30 flex items-center justify-between">
                   <div>
                     <span className="text-xs font-bold text-brand-accent uppercase tracking-wide">Aciertos</span>
                     <div className="font-outfit text-3xl font-black text-brand-text mt-1">{totalCorrect}</div>
@@ -265,7 +264,7 @@ export default function Dashboard() {
                   <CheckCircle2 size={36} className="text-brand-accent/30 shrink-0" aria-hidden="true" />
                 </div>
 
-                <div className="glass-card p-5 rounded-xl border-brand-cyan/30 flex items-center justify-between">
+                <div className="stats-card glass-card p-5 rounded-xl border-brand-cyan/30 flex items-center justify-between">
                   <div>
                     <span className="text-xs font-bold text-brand-cyan uppercase tracking-wide">Predicciones</span>
                     <div className="font-outfit text-3xl font-black text-brand-text mt-1">{totalPredicted}<span className="text-base font-medium text-brand-text-muted">/64</span></div>
@@ -273,7 +272,7 @@ export default function Dashboard() {
                   <TrendingUp size={36} className="text-brand-cyan/30 shrink-0" aria-hidden="true" />
                 </div>
 
-                <div className="glass-card p-5 rounded-xl flex items-center justify-between">
+                <div className="stats-card glass-card p-5 rounded-xl flex items-center justify-between">
                   <div>
                     <span className="text-xs font-bold text-brand-text-secondary uppercase tracking-wide">Efectividad</span>
                     <div className="font-outfit text-3xl font-black text-brand-text mt-1">{accuracy}%</div>

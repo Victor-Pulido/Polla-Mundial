@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useStore } from "../store/useStore";
 import { Clock, Lock, CheckCircle2, XCircle, HelpCircle, Save, Edit2, Play } from "lucide-react";
+import FlagImage from "./FlagImage";
 
 export default React.memo(function MatchCard({ match, userPrediction, onSimulateResult }) {
   const { savePrediction, isDemoMode } = useStore();
@@ -73,7 +74,6 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
     }
   };
 
-  /* Border and status badge */
   let borderClass  = "border-brand-border hover:border-brand-border-active";
   let statusBadge  = null;
 
@@ -134,15 +134,15 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
       {/* Teams and score */}
       <div className="flex items-center justify-between my-3 gap-2">
 
-        <div className="flex flex-col items-center flex-1 text-center">
+        <div className="flex flex-col items-center flex-1 text-center gap-1.5">
           {teamA ? (
             <>
-              <span className="text-3xl mb-1.5 select-none" role="img" aria-label={teamA.name}>{teamA.flag}</span>
+              <FlagImage code={teamA.countryCode} name={teamA.name} size={40} />
               <span className="font-outfit text-sm font-extrabold text-brand-text line-clamp-1">{teamA.name}</span>
             </>
           ) : (
             <>
-              <div className="w-10 h-10 rounded-full bg-brand-card-hover border border-brand-border flex items-center justify-center text-xs font-mono text-brand-text-muted mb-1.5" aria-hidden="true">?</div>
+              <div className="w-10 h-7 rounded bg-brand-card-hover border border-brand-border flex items-center justify-center text-xs font-mono text-brand-text-muted" aria-hidden="true">?</div>
               <span className="font-outfit text-sm font-bold text-brand-text-muted">{match.teamAPlaceholder}</span>
             </>
           )}
@@ -167,15 +167,15 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
           </span>
         </div>
 
-        <div className="flex flex-col items-center flex-1 text-center">
+        <div className="flex flex-col items-center flex-1 text-center gap-1.5">
           {teamB ? (
             <>
-              <span className="text-3xl mb-1.5 select-none" role="img" aria-label={teamB.name}>{teamB.flag}</span>
+              <FlagImage code={teamB.countryCode} name={teamB.name} size={40} />
               <span className="font-outfit text-sm font-extrabold text-brand-text line-clamp-1">{teamB.name}</span>
             </>
           ) : (
             <>
-              <div className="w-10 h-10 rounded-full bg-brand-card-hover border border-brand-border flex items-center justify-center text-xs font-mono text-brand-text-muted mb-1.5" aria-hidden="true">?</div>
+              <div className="w-10 h-7 rounded bg-brand-card-hover border border-brand-border flex items-center justify-center text-xs font-mono text-brand-text-muted" aria-hidden="true">?</div>
               <span className="font-outfit text-sm font-bold text-brand-text-muted">{match.teamBPlaceholder}</span>
             </>
           )}
@@ -205,7 +205,7 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
                 <button
                   onClick={() => setIsEditing(true)}
                   aria-label="Editar predicción"
-                  className="flex items-center justify-center min-w-[44px] min-h-[44px] bg-brand-card-hover border border-brand-border hover:border-brand-border-active rounded-lg text-brand-text-secondary hover:text-brand-cyan cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan/30"
+                  className="btn-interactive flex items-center justify-center min-w-[44px] min-h-[44px] bg-brand-card-hover border border-brand-border hover:border-brand-border-active rounded-lg text-brand-text-secondary hover:text-brand-cyan cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan/30"
                 >
                   <Edit2 size={13} aria-hidden="true" />
                 </button>
@@ -230,7 +230,7 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
                   value={scoreA}
                   onChange={e => setScoreA(e.target.value === "" ? "" : Math.max(0, parseInt(e.target.value) || 0))}
                   aria-label={`Goles de ${teamA?.name || "equipo local"}`}
-                  className="w-11 h-11 text-center bg-brand-bg border border-brand-border focus:border-brand-border-active text-brand-text font-outfit font-black rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-11 h-11 text-center bg-brand-bg border border-brand-border focus:border-brand-border-active text-brand-text font-outfit font-black rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 transition-[border-color,box-shadow] duration-150 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
                 <span className="text-brand-text-muted font-bold" aria-hidden="true">–</span>
                 <input
@@ -241,7 +241,7 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
                   value={scoreB}
                   onChange={e => setScoreB(e.target.value === "" ? "" : Math.max(0, parseInt(e.target.value) || 0))}
                   aria-label={`Goles de ${teamB?.name || "equipo visitante"}`}
-                  className="w-11 h-11 text-center bg-brand-bg border border-brand-border focus:border-brand-border-active text-brand-text font-outfit font-black rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-11 h-11 text-center bg-brand-bg border border-brand-border focus:border-brand-border-active text-brand-text font-outfit font-black rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 transition-[border-color,box-shadow] duration-150 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
 
@@ -249,7 +249,7 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
                 onClick={handleSave}
                 disabled={scoreA === "" || scoreB === "" || isSaving || !teamA || !teamB}
                 aria-label="Guardar predicción"
-                className="flex items-center justify-center min-w-[44px] min-h-[44px] bg-brand-cyan hover:bg-brand-border-active disabled:opacity-30 text-slate-900 rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:ring-offset-2 focus:ring-offset-brand-card"
+                className="btn-interactive flex items-center justify-center min-w-[44px] min-h-[44px] bg-brand-cyan hover:bg-brand-border-active disabled:opacity-30 text-slate-900 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:ring-offset-2 focus:ring-offset-brand-card"
               >
                 <Save size={15} aria-hidden="true" />
               </button>
@@ -263,7 +263,7 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
             {!adminSimOpen ? (
               <button
                 onClick={() => setAdminSimOpen(true)}
-                className="w-full py-2 border border-dashed border-brand-border hover:border-brand-cyan/50 bg-brand-card-hover text-brand-cyan hover:text-brand-text rounded-lg text-xs font-bold tracking-wide uppercase transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                className="btn-interactive w-full py-2 border border-dashed border-brand-border hover:border-brand-cyan/50 bg-brand-card-hover text-brand-cyan hover:text-brand-text rounded-lg text-xs font-bold tracking-wide uppercase cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <Play size={10} aria-hidden="true" />
                 Simular Partido (Admin)
@@ -275,7 +275,7 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
                   <button
                     onClick={() => setAdminSimOpen(false)}
                     aria-label="Cancelar simulación"
-                    className="text-brand-crimson hover:underline cursor-pointer"
+                    className="btn-interactive text-brand-crimson hover:underline cursor-pointer"
                   >
                     Cancelar
                   </button>
@@ -305,7 +305,7 @@ export default React.memo(function MatchCard({ match, userPrediction, onSimulate
                   <button
                     onClick={handleSimulate}
                     disabled={simScoreA === "" || simScoreB === ""}
-                    className="py-2 px-3 bg-brand-cyan text-slate-900 text-xs font-black uppercase rounded hover:bg-brand-border-active cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+                    className="btn-interactive py-2 px-3 bg-brand-cyan text-slate-900 text-xs font-black uppercase rounded hover:bg-brand-border-active cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan"
                   >
                     Guardar
                   </button>

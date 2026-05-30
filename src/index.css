@@ -13,7 +13,7 @@
   --color-brand-text-secondary: #94A3B8;
   --color-brand-text-muted:     #7B8EA3;
 
-  /* === Sports Blue (replaces gaming cyan) === */
+  /* === Sports Blue === */
   --color-brand-cyan:   #60A5FA;
 
   /* === Semantic states === */
@@ -27,12 +27,14 @@
   --font-outfit: "Outfit", system-ui, sans-serif;
   --font-inter:  "Inter", system-ui, sans-serif;
 
-  /* === Animation easing === */
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  /* === Easing curves (Emil Kowalski) === */
+  --ease-out-strong:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-out-quart:     cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* =====================================================
-   SURFACE SYSTEM (replaces glassmorphism)
+   SURFACE SYSTEM
    ===================================================== */
 
 .glass-panel {
@@ -43,8 +45,8 @@
 .glass-card {
   background: var(--color-brand-card);
   border: 1px solid var(--color-brand-border);
-  transition: background-color 0.15s var(--ease-out-quart),
-              border-color 0.15s var(--ease-out-quart);
+  transition: background-color 0.15s var(--ease-out-strong),
+              border-color 0.15s var(--ease-out-strong);
 }
 
 .glass-card:hover {
@@ -53,36 +55,146 @@
 }
 
 /* =====================================================
-   REDUCED MOTION
+   INTERACTIVE BUTTONS — press feedback (Emil)
+   Specify exact properties, avoid `transition-all`.
+   Buttons must feel responsive: scale(0.97) on :active.
    ===================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+.btn-interactive {
+  transition: transform 160ms var(--ease-out-strong),
+              background-color 150ms var(--ease-out-strong),
+              border-color     150ms var(--ease-out-strong),
+              color            150ms var(--ease-out-strong),
+              opacity          150ms var(--ease-out-strong),
+              box-shadow       150ms var(--ease-out-strong);
+}
+
+.btn-interactive:not(:disabled):active {
+  transform: scale(0.97);
 }
 
 /* =====================================================
-   SCROLLBAR
+   ENTRY ANIMATIONS
+   Nothing appears from nowhere — start scale(0.95)+opacity.
+   Ease-out: starts fast, feels responsive.
    ===================================================== */
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Tab panels — triggers when `hidden` attr is removed */
+[role="tabpanel"]:not([hidden]) {
+  @starting-style {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 220ms var(--ease-out-strong),
+              transform 220ms var(--ease-out-strong);
 }
-::-webkit-scrollbar-track {
-  background: var(--color-brand-bg);
+
+/* Navbar slides in from top on first paint */
+.navbar-animate {
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms var(--ease-out-strong),
+              transform 400ms var(--ease-out-strong);
 }
-::-webkit-scrollbar-thumb {
-  background: var(--color-brand-border);
-  border-radius: 3px;
+
+/* Join/landing card entrance */
+@keyframes join-card-enter {
+  from { opacity: 0; transform: scale(0.96) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-text-muted);
+.join-card-animate {
+  animation: join-card-enter 450ms var(--ease-out-strong) both;
+}
+
+/* Demo banner entrance */
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.demo-banner-animate {
+  animation: fade-down 350ms var(--ease-out-strong) both;
+  animation-delay: 200ms;
+}
+
+/* Sidebar predictions panel */
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+.sidebar-animate {
+  animation: slide-in-right 250ms var(--ease-out-strong) both;
+}
+
+/* Shared fade-up (podium, general) */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.fade-up { animation: fade-up 350ms var(--ease-out-strong) both; }
+
+/* =====================================================
+   STAGGER — leaderboard rows (35ms between items)
+   Stagger is decorative, never blocks interaction.
+   ===================================================== */
+
+@keyframes row-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.standing-row {
+  animation: row-enter 280ms var(--ease-out-strong) both;
+}
+.standing-row:nth-child(1) { animation-delay: 0ms;   }
+.standing-row:nth-child(2) { animation-delay: 35ms;  }
+.standing-row:nth-child(3) { animation-delay: 70ms;  }
+.standing-row:nth-child(4) { animation-delay: 105ms; }
+.standing-row:nth-child(5) { animation-delay: 140ms; }
+.standing-row:nth-child(6) { animation-delay: 175ms; }
+.standing-row:nth-child(7) { animation-delay: 210ms; }
+.standing-row:nth-child(8) { animation-delay: 245ms; }
+.standing-row:nth-child(n+9) { animation-delay: 280ms; }
+
+/* =====================================================
+   STATS CARDS STAGGER — 4 cards, 60ms apart
+   ===================================================== */
+
+@keyframes card-enter {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);   }
+}
+
+.stats-card {
+  animation: card-enter 300ms var(--ease-out-strong) both;
+}
+.stats-card:nth-child(1) { animation-delay: 0ms;   }
+.stats-card:nth-child(2) { animation-delay: 60ms;  }
+.stats-card:nth-child(3) { animation-delay: 120ms; }
+.stats-card:nth-child(4) { animation-delay: 180ms; }
+
+/* =====================================================
+   PODIUM STAGGER — 1st appears first, then 2nd, then 3rd
+   ===================================================== */
+
+.podium-first  { animation: fade-up 350ms var(--ease-out-strong) 0ms   both; }
+.podium-second { animation: fade-up 350ms var(--ease-out-strong) 100ms both; }
+.podium-third  { animation: fade-up 350ms var(--ease-out-strong) 200ms both; }
+
+/* =====================================================
+   SPINNER — faster spin = perceived faster load (Emil)
+   ===================================================== */
+
+@keyframes spin-fast {
+  to { transform: rotate(360deg); }
+}
+.spinner-fast {
+  animation: spin-fast 0.6s linear infinite;
 }
 
 /* =====================================================
@@ -90,10 +202,10 @@
    ===================================================== */
 
 @keyframes ping-dot {
-  0%, 100% { transform: scale(1);   opacity: 1; }
+  0%, 100% { transform: scale(1);   opacity: 1;   }
   50%       { transform: scale(1.4); opacity: 0.6; }
 }
-.animate-status { animation: ping-dot 2s var(--ease-out-quart) infinite; }
+.animate-status { animation: ping-dot 2s var(--ease-out-strong) infinite; }
 
 /* =====================================================
    SAVE FEEDBACK (functional — button press)
@@ -103,7 +215,7 @@
   0%, 100% { transform: scale(1); }
   50%       { transform: scale(0.96); }
 }
-.animate-press { animation: press-feedback 0.15s var(--ease-out-quart); }
+.animate-press { animation: press-feedback 0.15s var(--ease-out-strong); }
 
 /* =====================================================
    VIEW TRANSITIONS
@@ -122,8 +234,31 @@
 }
 @keyframes fade-in {
   from { opacity: 0; transform: scale(0.99); }
-  to   { opacity: 1; transform: scale(1); }
+  to   { opacity: 1; transform: scale(1);    }
 }
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:      0.01ms !important;
+  }
+}
+
+/* =====================================================
+   SCROLLBAR
+   ===================================================== */
+
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--color-brand-bg); }
+::-webkit-scrollbar-thumb  { background: var(--color-brand-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-brand-text-muted); }
 
 /* =====================================================
    BASE
