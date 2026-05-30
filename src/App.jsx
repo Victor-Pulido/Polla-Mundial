@@ -28,10 +28,10 @@ function PollWrapper() {
 
   if (checkingSession) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full border-4 border-brand-cyan border-t-transparent animate-spin"></div>
-          <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Restaurando Credenciales...</span>
+      <div className="min-h-screen bg-brand-bg flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3" role="status" aria-label="Restaurando sesión">
+          <div className="w-10 h-10 rounded-full border-4 border-brand-cyan border-t-transparent animate-spin" aria-hidden="true"></div>
+          <span className="text-xs font-mono text-brand-text-muted uppercase tracking-widest">Restaurando sesión...</span>
         </div>
       </div>
     );

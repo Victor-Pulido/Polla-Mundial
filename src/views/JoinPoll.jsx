@@ -12,109 +12,105 @@ export default function JoinPoll() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLocalError("");
-    
     const trimmed = username.trim();
     if (trimmed.length < 3 || trimmed.length > 20) {
       setLocalError("El nombre debe tener entre 3 y 20 caracteres.");
       return;
     }
-
-    const success = await joinPoll(pollId, trimmed);
-    if (!success) {
-      // El error de la BD/LocalStorage ya se guarda en el store
-    }
+    await joinPoll(pollId, trimmed);
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-[#070A13] via-[#0B0F19] to-[#121A2D]">
-      
-      {/* Círculos decorativos con glows de neón en el fondo */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-cyan/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }}></div>
+    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-brand-bg">
 
-      {/* Banner de Modo Demo */}
+      {/* Demo banner */}
       {isDemoMode && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-1.5 bg-brand-cyan/10 border border-brand-cyan/20 rounded-full text-xs font-semibold tracking-wider text-brand-cyan uppercase animate-pulse-glow">
-          <Cpu size={14} className="animate-spin" />
-          Corriendo en Modo Demo (Local Offline)
+        <div
+          className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-1.5 bg-brand-card border border-brand-border rounded-full text-xs font-semibold tracking-wider text-brand-cyan uppercase"
+          role="status"
+          aria-live="polite"
+        >
+          <Cpu size={13} aria-hidden="true" />
+          Modo Demo (sin conexión)
         </div>
       )}
 
-      {/* Tarjeta del Ticket */}
-      <div className="relative w-full max-w-md glass-card rounded-2xl border border-brand-border/40 overflow-hidden shadow-2xl">
-        
-        {/* Línea dorada superior */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-brand-cyan via-brand-accent to-brand-gold"></div>
+      {/* Card */}
+      <div className="relative w-full max-w-md glass-card rounded-2xl overflow-hidden shadow-xl">
 
-        {/* Encabezado del Ticket */}
-        <div className="p-8 text-center border-b border-white/5 relative">
-          <div className="inline-flex p-3 bg-brand-gold/10 border border-brand-gold/20 rounded-full text-brand-gold mb-4 animate-bounce">
+        {/* Top accent line */}
+        <div className="h-1 w-full bg-gradient-to-r from-brand-cyan via-brand-accent to-brand-gold" aria-hidden="true"></div>
+
+        {/* Header */}
+        <div className="p-8 text-center border-b border-brand-border">
+          <div
+            className="inline-flex p-3 bg-brand-gold/10 border border-brand-gold/25 rounded-full text-brand-gold mb-4"
+            aria-hidden="true"
+          >
             <Trophy size={36} />
           </div>
-          
-          <h1 className="font-outfit text-3xl font-extrabold tracking-tight text-white mb-2 uppercase">
+
+          <h1 className="font-outfit text-3xl font-extrabold tracking-tight text-brand-text mb-1 uppercase">
             Mundial 2026
           </h1>
           <p className="text-sm font-medium tracking-widest text-brand-cyan uppercase">
             Polla de Amigos
           </p>
-          
-          {/* Identificador de la Polla */}
-          <div className="mt-3 inline-block px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-gray-400">
+
+          <div className="mt-3 inline-block px-3 py-1 bg-brand-bg border border-brand-border rounded text-xs font-mono text-brand-text-muted">
             ID: {pollId?.toUpperCase()}
           </div>
         </div>
 
-        {/* Formulario */}
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-8 space-y-6" noValidate>
           <div className="space-y-2">
-            <label htmlFor="username" className="block text-xs font-semibold tracking-wider text-gray-400 uppercase">
-              Ingresa tu nombre / apodo
+            <label htmlFor="username" className="block text-sm font-semibold tracking-wide text-brand-text-secondary uppercase">
+              Tu nombre o apodo
             </label>
             <input
               id="username"
               type="text"
               required
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={e => setUsername(e.target.value)}
               placeholder="Ej: JuanGol, SuperClasificado..."
               maxLength={20}
-              className="w-full px-4 py-3 bg-slate-900/60 border border-brand-border/80 focus:border-brand-cyan/70 rounded-lg text-white font-medium placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-cyan transition-all"
+              autoComplete="nickname"
+              className="w-full px-4 py-3 bg-brand-bg border border-brand-border focus:border-brand-border-active rounded-lg text-brand-text font-medium placeholder-brand-text-muted focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 transition-colors"
             />
-            <span className="block text-[10px] text-gray-500 text-right">
-              Mínimo 3, máximo 20 letras
+            <span className="block text-xs text-brand-text-muted text-right" aria-live="polite">
+              {username.length}/20 caracteres
             </span>
           </div>
 
-          {/* Manejo de Errores */}
           {(error || localError) && (
-            <div className="flex items-center gap-2 p-3 bg-brand-crimson/10 border border-brand-crimson/25 rounded-lg text-xs font-medium text-brand-crimson">
-              <ShieldAlert size={16} className="shrink-0" />
+            <div
+              role="alert"
+              className="flex items-center gap-2 p-3 bg-brand-crimson/10 border border-brand-crimson/30 rounded-lg text-sm font-medium text-brand-crimson"
+            >
+              <ShieldAlert size={15} className="shrink-0" aria-hidden="true" />
               <span>{localError || error}</span>
             </div>
           )}
 
-          {/* Botón de Entrada */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-brand-cyan to-brand-accent hover:from-brand-cyan/90 hover:to-brand-accent/90 disabled:opacity-50 text-black font-extrabold text-sm tracking-wider uppercase rounded-lg shadow-lg hover:shadow-brand-cyan/20 transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-brand-cyan hover:bg-brand-border-active disabled:opacity-50 text-slate-900 font-extrabold text-sm tracking-wider uppercase rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:ring-offset-2 focus:ring-offset-brand-card"
           >
             {loading ? "Verificando..." : "Entrar al Estadio"}
-            <ArrowRight size={16} />
+            <ArrowRight size={15} aria-hidden="true" />
           </button>
         </form>
 
-        {/* Detalles del Boleto (Ticket Design Accent) */}
-        <div className="relative border-t border-dashed border-white/10 p-6 bg-slate-950/40 text-center text-xs text-gray-500 flex justify-between items-center">
-          {/* Círculos laterales simulando boleto perforado */}
-          <div className="absolute -left-3 top-[-10px] w-6 h-6 bg-[#0B0F19] rounded-full border-r border-brand-border/40"></div>
-          <div className="absolute -right-3 top-[-10px] w-6 h-6 bg-[#0B0F19] rounded-full border-l border-brand-border/40"></div>
-          
+        {/* Ticket footer */}
+        <div className="relative border-t border-dashed border-brand-border p-5 bg-brand-bg text-center text-xs text-brand-text-muted flex justify-between items-center">
+          <div className="absolute -left-3 top-[-10px] w-6 h-6 bg-brand-bg rounded-full border-r border-brand-border" aria-hidden="true"></div>
+          <div className="absolute -right-3 top-[-10px] w-6 h-6 bg-brand-bg rounded-full border-l border-brand-border" aria-hidden="true"></div>
           <span>SEC: VIP-STADIUM</span>
-          <span>FECHA: JUN-JUL 2026</span>
-          <span>ADMIT ONE 🎫</span>
+          <span>JUN–JUL 2026</span>
+          <span>ADMIT ONE</span>
         </div>
 
       </div>
